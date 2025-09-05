@@ -1,8 +1,11 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 public class Main {
@@ -29,7 +32,26 @@ public class Main {
             e.printStackTrace();
         }
 
+        // Create menu "help" button to take users to Github page
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Help");
+        JMenuItem helpItem = new JMenuItem("Info");
+        helpItem.addActionListener(e -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/Connor64/ica-fault-extractor"));
+            } catch (UnsupportedOperationException | IOException | URISyntaxException ex) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Visit \"https://github.com/Connor64/ica-fault-extractor\" for more information about the program.",
+                        "Program Info",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        menu.add(helpItem);
+        menuBar.add(menu);
+
         // Add and enable the main window
+        frame.setJMenuBar(menuBar);
         frame.add(mainWindow);
         frame.setVisible(true);
     }

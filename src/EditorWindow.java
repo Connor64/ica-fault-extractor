@@ -11,17 +11,22 @@ import java.awt.*;
 import java.io.*;
 import java.util.HashSet;
 
+/**
+ * The content window of the application.
+ */
 public class EditorWindow extends JPanel {
 
+    // Java Swing Elements
     private final JButton openButton, exportButton;
     private final JFileChooser openFileChooser, exportFileChooser;
     private final JLabel indicatorLabel, attributeLabel;
     private final JPanel attributePanel;
     private final JScrollPane attributeScrollPane;
 
+    // Elements to track input file and selected fault attributes
     private File selectedFile = null;
     private NodeList alarmList = null;
-    private HashSet<String> selectedAttributes;
+    private final HashSet<String> selectedAttributes;
 
     private final DocumentBuilder docBuilder;
 
@@ -107,6 +112,7 @@ public class EditorWindow extends JPanel {
      * Opens a file chooser and allows the user to select an XML file to extract the faults from.
      */
     private void openFaultFile() {
+        // Open the file chooser, return if the user presses cancel or exits out
         if (openFileChooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) return;
 
         setSelectedFile(openFileChooser.getSelectedFile());
@@ -127,9 +133,10 @@ public class EditorWindow extends JPanel {
             // Create a checkbox for each attribute of the alarm node
             for (int i = 0; i < attributes.getLength(); i++) {
                 String attributeText = attributes.item(i).getNodeName().trim();
-                System.out.println("attribute " + i + ": " + attributeText);
 
                 JCheckBox attributeCheckBox = new JCheckBox(attributeText);
+
+                // Set the checkbox action to toggle whether the attribute is selected
                 attributeCheckBox.addActionListener(ae -> {
                     if (attributeCheckBox.isSelected()) {
                         selectedAttributes.add(attributeCheckBox.getText());
@@ -161,15 +168,13 @@ public class EditorWindow extends JPanel {
         if (selectedFile == null) return;
         if (exportFileChooser.showSaveDialog(null) != JFileChooser.APPROVE_OPTION) return;
 
-        System.out.println("attribute buttons: " + attributePanel.getComponentCount());
-
         File fileToSave = exportFileChooser.getSelectedFile();
 
         // Ensure the destination file uses a ".csv" file extension
         if (!isFileExtensionValid(fileToSave, ".csv")) return;
 
+        // Write the selected data to the output file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileToSave))) {
-
             writer.write(getCSVHeader());
 
             for (int i = 0; i < alarmList.getLength(); i++) {
