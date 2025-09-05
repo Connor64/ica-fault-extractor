@@ -18,12 +18,7 @@ attributes you specified.
 If you need to make changes to this program, you can clone this repository and open it in a Java
 development environment. You may need to install a JDK on your system if you do not have one already (this project uses
 JDK 21.0.6).
-```
-git clone https://github.com/Connor64/ica-fault-extractor.git
-```
+
 The bulk of the program is included in `EditorWindow.java` and is thoroughly documented.
 
 To create a standalone program, you will need to build the application as an executable .jar file. This process will depend on the IDE you are using.
-
-
-If you need technical support with the program, feel free to reach out to me at `jconnorcolbert@gmail.com`.
