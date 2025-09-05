@@ -6,6 +6,8 @@ attributes you specified.
 
 ## How to use the Fault Extractor Utility:
 1. Launch the program
+   * You will need Java installed on your machine
+   * If double-clicking the application doesn't work, try running `java -jar ica-fault-extractor.jar` in your terminal where the file is located
 2. Open an XML file containing the faults from your machine 
    * The file should be wrapped with the `<AlarmCollection>` tag 
    * Inside this tag should be several `<Alarm>` tags that contain the fault data

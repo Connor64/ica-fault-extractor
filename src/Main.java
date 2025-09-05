@@ -18,7 +18,7 @@ public class Main {
 
         EditorWindow mainWindow = new EditorWindow();
 
-        // Try to set the ICA logo as the application icon
+        // Try to set the ICA logo as the application icon (only on Windows)
         try {
             URL resource = mainWindow.getClass().getResource("/resources/ICA-Logo.png");
             if (resource != null) {

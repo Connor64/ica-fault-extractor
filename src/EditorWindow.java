@@ -18,6 +18,7 @@ public class EditorWindow extends JPanel {
 
     // Java Swing Elements
     private final JButton openButton, exportButton;
+    private final JCheckBox omitSparesCheckbox;
     private final JFileChooser openFileChooser, exportFileChooser;
     private final JLabel indicatorLabel, attributeLabel;
     private final JPanel attributePanel;
@@ -39,6 +40,10 @@ public class EditorWindow extends JPanel {
 
         exportButton = new JButton("Export File");
         exportButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        omitSparesCheckbox = new JCheckBox("Omit Spares");
+        omitSparesCheckbox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        omitSparesCheckbox.setToolTipText("If enabled, the export file omits faults not used, marked as \"Spare\" in the XML file.");
 
         indicatorLabel = new JLabel();
         indicatorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -105,7 +110,10 @@ public class EditorWindow extends JPanel {
         add(attributeLabel);
         add(attributeScrollPane);
         add(Box.createRigidArea(new Dimension(0, 25)));
+        add(omitSparesCheckbox);
         add(exportButton);
+
+        setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
     /**
@@ -178,7 +186,7 @@ public class EditorWindow extends JPanel {
             writer.write(getCSVHeader());
 
             for (int i = 0; i < alarmList.getLength(); i++) {
-                writer.write(getCSVRow(alarmList.item(i)));
+                writer.write(getCSVRow(alarmList.item(i), omitSparesCheckbox.isSelected()));
             }
 
         } catch (IOException ex) {
@@ -221,7 +229,7 @@ public class EditorWindow extends JPanel {
      * @param alarmNode The fault alarm to extract the data from.
      * @return A comma-separated string of the alarm data.
      */
-    private String getCSVRow(Node alarmNode) {
+    private String getCSVRow(Node alarmNode, boolean omitSpares) {
         NamedNodeMap attributeList = alarmNode.getAttributes();
 
         // Search for message child node and set first element to its text contents
@@ -229,6 +237,10 @@ public class EditorWindow extends JPanel {
         for (int i = 0; i < alarmNode.getChildNodes().getLength(); i++) {
             if (alarmNode.getChildNodes().item(i).getNodeName().trim().equals("Message")) {
                 entries = alarmNode.getChildNodes().item(i).getTextContent().trim();
+
+                // If omitSpares is enabled, check if the entry is a spare, return empty string if true
+                if (omitSpares && entries.split(":")[1].toLowerCase().trim().equals("spare")) return "";
+
                 break;
             }
         }
