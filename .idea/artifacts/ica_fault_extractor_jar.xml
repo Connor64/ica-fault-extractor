@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ica-fault-extractor:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ica_fault_extractor_jar</output-path>
+    <root id="archive" name="ica-fault-extractor.jar">
+      <element id="module-output" name="ica-fault-extractor" />
+    </root>
+  </artifact>
+</component>
