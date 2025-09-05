@@ -194,7 +194,7 @@ public class EditorWindow extends JPanel {
      * @return Whether the file's extension matches the specified extension
      */
     private boolean isFileExtensionValid(File file, String extension) {
-        if (selectedFile.getName().toLowerCase().endsWith(extension)) return true;
+        if (file.getName().toLowerCase().endsWith(extension)) return true;
 
         JOptionPane.showMessageDialog(
                 null,
