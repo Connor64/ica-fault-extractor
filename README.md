@@ -21,4 +21,6 @@ JDK 21.0.6).
 ```
 git clone https://github.com/Connor64/ica-fault-extractor.git
 ```
-The bulk of the program is included in `EditorWindow.java` and is thoroughly documented. 
+The bulk of the program is included in `EditorWindow.java` and is thoroughly documented.
+
+If you need technical support with the program, feel free to reach out to me at `jconnorcolbert@gmail.com`.
